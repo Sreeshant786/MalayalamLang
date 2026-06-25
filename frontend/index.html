@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>മലയാളംലാങ്</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="landing">
+
+    <h1>മലയാളം ഭാഷ</h1>
+
+    <h2>നിങ്ങളുടെ ലിപി തിരഞ്ഞെടുക്കുക</h2>
+
+    <button onclick="chooseMalayalam()">
+        മലയാള ലിപി (Malayalam Script)
+    </button>
+
+    <button onclick="chooseLatin()">
+        ലാറ്റിൻ ലിപി (latin Script)
+    </button>
+
+</div>
+
+<script>
+
+function chooseMalayalam(){
+
+    localStorage.setItem(
+        "mode",
+        "malayalam"
+    );
+
+    window.location =
+        "ide.html";
+}
+
+function chooseLatin(){
+
+    localStorage.setItem(
+        "mode",
+        "latin"
+    );
+
+    window.location =
+        "ide.html";
+}
+
+</script>
+
+</body>
+</html>
