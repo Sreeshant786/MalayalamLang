@@ -2,11 +2,9 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
-from keywords_malayalam import KEYWORDS as MALAYALAM_KEYWORDS
-from keywords_latin import KEYWORDS as LATIN_KEYWORDS
-
-from translator import translate_code
-
+from backend.keywords_malayalam import KEYWORDS as MALAYALAM_KEYWORDS
+from backend.keywords_latin import KEYWORDS as LATIN_KEYWORDS
+from backend.translator import translate_code
 app = FastAPI()
 
 app.add_middleware(
