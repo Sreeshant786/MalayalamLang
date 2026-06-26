@@ -7,16 +7,17 @@ from keywords_latin import KEYWORDS as LATIN_KEYWORDS
 
 from translator import translate_code
 
+
+
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 def convert_output(value, mode):
 
