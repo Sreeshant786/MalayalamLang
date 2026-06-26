@@ -39,7 +39,7 @@ async function runCode() {
         console.log("Sending Request...");
 
         const response = await fetch(
-            "http://127.0.0.1:8000/run",
+    "https://malayalamlang.onrender.com/run",
             {
                 method: "POST",
 
