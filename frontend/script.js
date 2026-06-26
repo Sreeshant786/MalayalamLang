@@ -7,7 +7,9 @@ window.onload = function () {
     const modeTitle = document.getElementById("modeTitle");
     const editor = document.getElementById("code");
 
-    if (mode === "latin") {
+    const safeMode = mode || "malayalam";
+
+    if (safeMode === "latin") {
 
         modeTitle.innerText = "Latin Script Mode";
 
@@ -31,25 +33,24 @@ kanikkuka(flag)`;
 // Run Button
 async function runCode() {
 
-    const code =
-        document.getElementById("code").value;
+    const code = document.getElementById("code").value;
+
+    const safeMode = localStorage.getItem("mode") || "malayalam";
 
     try {
 
         console.log("Sending Request...");
 
         const response = await fetch(
-    "https://malayalamlang.onrender.com/run",
+            "https://malayalamlang-backend.onrender.com/run",
             {
                 method: "POST",
-
                 headers: {
                     "Content-Type": "application/json"
                 },
-
                 body: JSON.stringify({
                     code: code,
-                    mode: localStorage.getItem("mode") || "malayalam"
+                    mode: safeMode
                 })
             }
         );
@@ -57,17 +58,17 @@ async function runCode() {
         console.log("Response Status:", response.status);
 
         const data = await response.json();
-        
 
         document.getElementById("output").innerText =
             data.output || "No output received";
 
+        document.getElementById("python").innerText =
+            data.python_code || "";
+
     }
     catch (error) {
 
-        console.error("ERROR:");
-        console.error(error);
-
+        console.error("ERROR:", error);
 
         document.getElementById("output").innerText =
             "Error connecting to backend";
