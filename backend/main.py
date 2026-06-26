@@ -5,7 +5,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.keywords_malayalam import KEYWORDS as MALAYALAM_KEYWORDS
 from backend.keywords_latin import KEYWORDS as LATIN_KEYWORDS
 from backend.translator import translate_code
-app = FastAPI()
+
+app = FastAPI(
+    title="MalayalamLang API",
+    version="1.0.0",
+    description="API for executing MalayalamLang programs written in Malayalam or Roman Malayalam."
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -14,6 +19,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/")
+def home():
+    return {
+        "project": "MalayalamLang",
+        "version": "1.0.0",
+        "status": "Running",
+        "description": "Malayalam programming language interpreter with Malayalam and Roman Malayalam support.",
+        "supported_modes": [
+            "malayalam",
+            "latin"
+        ],
+        "api_endpoint": "/run",
+        "documentation": "/docs"
+    }
 
 
 def convert_output(value, mode):
@@ -56,8 +77,7 @@ def run_code(data: CodeRequest):
     else:
         keywords = MALAYALAM_KEYWORDS
 
-    # Translate MalayalamLang / Roman Malayalam
-    # into Python
+    # Translate MalayalamLang / Roman Malayalam into Python
     python_code = translate_code(
         data.code,
         keywords
