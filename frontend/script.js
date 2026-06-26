@@ -1,40 +1,6 @@
-// Detect selected mode
-const mode = localStorage.getItem("mode");
-
-// Page Load
-window.onload = function () {
-
-    const modeTitle = document.getElementById("modeTitle");
-    const editor = document.getElementById("code");
-
-    const safeMode = mode || "malayalam";
-
-    if (safeMode === "latin") {
-
-        modeTitle.innerText = "Latin Script Mode";
-
-        editor.value =
-`flag = sathyam
-
-kanikkuka(flag)`;
-
-    } else {
-
-        modeTitle.innerText = "Malayalam Script Mode";
-
-        editor.value =
-`flag = സത്യം
-
-കാണിക്കുക(flag)`;
-    }
-};
-
-
-// Run Button
 async function runCode() {
 
     const code = document.getElementById("code").value;
-
     const safeMode = localStorage.getItem("mode") || "malayalam";
 
     try {
@@ -55,9 +21,17 @@ async function runCode() {
             }
         );
 
-        console.log("Response Status:", response.status);
+        console.log("STATUS:", response.status);
 
-        const data = await response.json();
+        const text = await response.text();
+        console.log("RAW RESPONSE:", text);
+
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            throw new Error("Backend did not return JSON");
+        }
 
         document.getElementById("output").innerText =
             data.output || "No output received";
@@ -68,9 +42,9 @@ async function runCode() {
     }
     catch (error) {
 
-        console.error("ERROR:", error);
+        console.error("FULL ERROR:", error);
 
         document.getElementById("output").innerText =
-            "Error connecting to backend";
+            error.message;
     }
 }
